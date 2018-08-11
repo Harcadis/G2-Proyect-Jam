@@ -315,6 +315,7 @@ MonoBehaviour:
   gridY: 0
   grid: {fileID: 1842728320}
   moveCooldown: 0.23
+  ownedTiles: 0
 --- !u!212 &868770086
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -585,6 +586,7 @@ MonoBehaviour:
   gridY: 0
   grid: {fileID: 1842728320}
   moveCooldown: 0.23
+  ownedTiles: 0
 --- !u!212 &1787324824
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -671,6 +673,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1db6c736d0950db40ac28a9b816d6b40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameSettings: {fileID: 11400000, guid: d053706161b49bf43b8be6c7b2831802, type: 2}
   player1: {fileID: 1787324823}
   player2: {fileID: 868770085}
   superDrill: {fileID: 1056298410}

@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Grid : MonoBehaviour
 {
+    public GameSettings gameSettings;
 
     public Player player1;
     public Player player2;
@@ -29,6 +30,7 @@ public class Grid : MonoBehaviour
     private float gridOriginX;
     private float gridOriginY;
 
+
     // Use this for initialization
     void Start()
     {
@@ -37,7 +39,6 @@ public class Grid : MonoBehaviour
 
         tiles = new Tile[gridWidth, gridHeight];
         tileContent = new GridContent[gridWidth, gridHeight];
-
 
         for (int i = 0; i < gridWidth; i++)
         {
@@ -100,6 +101,7 @@ public class Grid : MonoBehaviour
             }
 
             tiles[gridX, gridY].setOwner(movingPlayer);
+            movingPlayer.ownedTiles++;
 
             if (Random.Range(0f, 1f) > 0.85)
                 spawnPowerUp();

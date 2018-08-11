@@ -23,6 +23,8 @@ public class Player : MonoBehaviour
 
     private float lastMovementTime;
 
+    public int ownedTiles;
+
     // Use this for initialization
     void Start()
     {
