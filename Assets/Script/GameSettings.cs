@@ -13,6 +13,7 @@ public class GameSettings : ScriptableObject
     public int superDrillsAtStart;
     public int superDrillsPerPowerUp;
 
+
     public bool unlimitedTime;
     public float gameDuration;
 }
