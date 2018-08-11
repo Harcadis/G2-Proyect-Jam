@@ -19,15 +19,25 @@ public class Player : MonoBehaviour
 
     public Grid grid;
 
-    public float moveCooldown = 0.4f;
+    private float moveCooldown = 0.4f;
 
     private float lastMovementTime;
 
     public int ownedTiles;
 
+    public int frontLayerMask;
+    public int backLayerMask;
+
+    private Transform body;
+
+    private Vector3 rightScale;
+    private Vector3 leftScale;
+
     // Use this for initialization
     void Start()
     {
+        moveCooldown = grid.gameSettings.moveCooldown;
+
         if (playerNumber == PLAYERS.player1)
         {
             keyUp = KeyCode.W;
@@ -42,6 +52,11 @@ public class Player : MonoBehaviour
             keyLeft = KeyCode.LeftArrow;
             keyRigth = KeyCode.RightArrow;
         }
+
+        body = this.transform.GetChild(0);
+        rightScale = body.localScale;
+        leftScale = body.localScale;
+        leftScale.x = -body.localScale.x;
     }
 
     // Update is called once per frame
@@ -55,38 +70,49 @@ public class Player : MonoBehaviour
             if (Input.GetKey(keyUp))
             {
                 move(gridX, gridY - 1);
+                body.localEulerAngles = new Vector3(0, 0, -90);
+                body.localScale = rightScale;
             }
             else if (Input.GetKey(keyDown))
             {
                 move(gridX, gridY + 1);
+                body.localEulerAngles = new Vector3(0, 0, 90);
+                body.localScale = rightScale;
             }
             else if (Input.GetKey(keyRigth))
             {
                 move(gridX + 1, gridY);
+                body.localEulerAngles = new Vector3(0, 0, 0);
+                body.localScale = leftScale;
             }
             else if (Input.GetKey(keyLeft))
             {
                 move(gridX - 1, gridY);
+                body.localEulerAngles = new Vector3(0, 0, 0);
+                body.localScale = rightScale;
             }
         }
     }
 
     private void move(int newGridX, int newGridY)
     {
-        if(grid.tryMove(playerNumber, newGridX, newGridY))
+        if(grid.tryMove(playerNumber, newGridX, newGridY, gridX, gridY))
         {
             lastMovementTime = Time.time;
             gridX = newGridX;
             gridY = newGridY;
 
-            this.transform.position = grid.gridToWorldCoord(gridX, gridY);
+            Vector2 newCoords = grid.gridToWorldCoord(gridX, gridY);
+            iTween.MoveTo(this.gameObject, iTween.Hash("x", newCoords.x, "y", newCoords.y, "easetype", iTween.EaseType.easeInOutSine, "time", moveCooldown));
         }
-
-        //lastMovementTime = 4.1
     }
 
     public void getPowerup()
     {
-        drillCounter += 3;
+        drillCounter += grid.gameSettings.superDrillsPerPowerUp;
+        if (drillCounter > grid.gameSettings.maxPowerUps)
+        {
+            drillCounter = grid.gameSettings.maxPowerUps;
+        }
     }
 }

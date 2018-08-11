@@ -41,3 +41,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: RedBG
+    uniqueID: 1942058561
+    locked: 0
+  - name: BlueBG
+    uniqueID: 2319211833
+    locked: 0
+  - name: Objects
+    uniqueID: 1458700325
+    locked: 0

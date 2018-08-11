@@ -13,9 +13,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxPowerUps: 7
   moveCooldown: 0.2
-  spawnedPowerUps: 5
-  powerUpsSpawnRate: 0.9
-  initialObstacles: 7
+  initialPowerUpsOnGrid: 0
+  powerUpsSpawnRate: 0.05
+  obstaclesNumber: 7
   superDrillsAtStart: 0
   superDrillsPerPowerUp: 1
   unlimitedTime: 0

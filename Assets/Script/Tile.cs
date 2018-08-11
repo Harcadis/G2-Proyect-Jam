@@ -9,11 +9,12 @@ public class Tile : MonoBehaviour {
     public bool Obstacle;
     public Player ocupant;
 
+    private SpriteMask mask;
 
 	// Use this for initialization
 	void Awake () {
         spriteRenderer = this.GetComponent<SpriteRenderer>();
-
+        mask = this.GetComponent<SpriteMask>();
     }
 	
 	// Update is called once per frame
@@ -23,7 +24,11 @@ public class Tile : MonoBehaviour {
 
     public void setOwner (Player player) {
         owner = player;
-        spriteRenderer.color = player.color;
+        //spriteRenderer.color = player.color;
+        spriteRenderer.color = new Color(0,0,0,0);
+
+        mask.frontSortingOrder = player.frontLayerMask;
+        mask.backSortingOrder = player.backLayerMask;
     }
 
     public bool checkIfCanMove (Player player)

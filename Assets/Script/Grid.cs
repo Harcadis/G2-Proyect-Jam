@@ -13,9 +13,6 @@ public class Grid : MonoBehaviour
     public GridContent superDrill;
     public GridContent obstacle;
 
-    public int initialObstacleNumber;
-    public int initialPowerUpsNumber;
-
     public Tile[,] tiles;
     public GridContent[,] tileContent;
 
@@ -50,14 +47,13 @@ public class Grid : MonoBehaviour
             }
         }
 
-        while (initialPowerUpsNumber > 0)
+
+        for (int i = 0; i < gameSettings.initialPowerUpsOnGrid; i++)
         {
             spawnPowerUp();
-            initialPowerUpsNumber--;
         }
 
-
-        for (int i = 0; i < initialObstacleNumber; i++)
+        for (int i = 0; i < gameSettings.obstaclesNumber; i++)
         {
             spawnObstacle();
         }
@@ -76,7 +72,7 @@ public class Grid : MonoBehaviour
         return new Vector2(tileWidth * gridX - gridOriginX, gridOriginY - tileHeight * gridY);
     }
 
-    public bool tryMove(PLAYERS player, int gridX, int gridY)
+    public bool tryMove(PLAYERS player, int gridX, int gridY, int previousGridX, int previousGridY)
     {
         Player movingPlayer = player == PLAYERS.player1 ? player1 : player2;
         Player otherPlayer = player == PLAYERS.player1 ? player2 : player1;
@@ -100,10 +96,10 @@ public class Grid : MonoBehaviour
                 }
             }
 
-            tiles[gridX, gridY].setOwner(movingPlayer);
+            tiles[previousGridX, previousGridY].setOwner(movingPlayer);
             movingPlayer.ownedTiles++;
 
-            if (Random.Range(0f, 1f) > 0.85)
+            if (Random.Range(0f, 1f) < gameSettings.powerUpsSpawnRate)
                 spawnPowerUp();
 
             return true;

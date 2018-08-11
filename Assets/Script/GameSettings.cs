@@ -7,9 +7,11 @@ public class GameSettings : ScriptableObject
 {
     public int maxPowerUps;
     public float moveCooldown;
-    public int spawnedPowerUps;
+
+    public int initialPowerUpsOnGrid;
     public float powerUpsSpawnRate;
-    public int initialObstacles;
+    public int obstaclesNumber;
+
     public int superDrillsAtStart;
     public int superDrillsPerPowerUp;
 
