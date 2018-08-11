@@ -32,7 +32,8 @@ public class Tile : MonoBehaviour {
         {
             return true;
         }
-        if (owner != player && player.isPowerUp) {
+        if (owner != player && player.drillCounter > 0) {
+            player.drillCounter--;
             return true;
         }
         return false;

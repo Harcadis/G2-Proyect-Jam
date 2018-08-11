@@ -2,11 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum PLAYERS { player1, player2 };
+
 public class Player : MonoBehaviour
 {
 
+    KeyCode keyUp, keyDown, keyLeft, keyRigth;
+    
+    public PLAYERS playerNumber;
 
-    public bool isPowerUp;
+    public int drillCounter = 0;
     public Color color;
 
     public int gridX;
@@ -21,7 +26,20 @@ public class Player : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        this.transform.position = grid.gridToWorldCoord(gridX, gridY);
+        if (playerNumber == PLAYERS.player1)
+        {
+            keyUp = KeyCode.W;
+            keyDown = KeyCode.S;
+            keyLeft = KeyCode.A;
+            keyRigth = KeyCode.D;
+        }
+        if (playerNumber == PLAYERS.player2)
+        {
+            keyUp = KeyCode.UpArrow;
+            keyDown = KeyCode.DownArrow;
+            keyLeft = KeyCode.LeftArrow;
+            keyRigth = KeyCode.RightArrow;
+        }
     }
 
     // Update is called once per frame
@@ -32,30 +50,28 @@ public class Player : MonoBehaviour
         //if tryMove retuns true, move the player
         if (Time.time - lastMovementTime > moveCooldown)
         {
-            if (Input.GetKey(KeyCode.W))
+            if (Input.GetKey(keyUp))
             {
                 move(gridX, gridY - 1);
             }
-            if (Input.GetKey(KeyCode.S))
+            else if (Input.GetKey(keyDown))
             {
                 move(gridX, gridY + 1);
-
             }
-            if (Input.GetKey(KeyCode.A))
-            {
-                move(gridX - 1, gridY);
-
-            }
-            if (Input.GetKey(KeyCode.D))
+            else if (Input.GetKey(keyRigth))
             {
                 move(gridX + 1, gridY);
+            }
+            else if (Input.GetKey(keyLeft))
+            {
+                move(gridX - 1, gridY);
             }
         }
     }
 
     private void move(int newGridX, int newGridY)
     {
-        if(grid.tryMove(this, newGridX, newGridY))
+        if(grid.tryMove(playerNumber, newGridX, newGridY))
         {
             lastMovementTime = Time.time;
             gridX = newGridX;
@@ -65,5 +81,10 @@ public class Player : MonoBehaviour
         }
 
         //lastMovementTime = 4.1
+    }
+
+    public void getPowerup()
+    {
+        drillCounter += 3;
     }
 }
