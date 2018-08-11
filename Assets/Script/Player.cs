@@ -87,6 +87,12 @@ public class Player : MonoBehaviour
 
     public void getPowerup()
     {
-        drillCounter += 3;
-    }
+        drillCounter += grid.gameSettings.superDrillsPerPowerUp;
+        if (drillCounter >= grid.gameSettings.maxPowerUps)
+        {
+            drillCounter = grid.gameSettings.maxPowerUps;
+        }
+
+    }       
+
 }
