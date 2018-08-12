@@ -30,7 +30,7 @@ public class Grid : MonoBehaviour
     private bool playerSpawned = false;
     private bool obstaclesSpawned = false;
 
-    private float startTime;
+    public float startTime;
     // Use this for initialization
     void Start()
     {
@@ -58,11 +58,11 @@ public class Grid : MonoBehaviour
             }
         }
        
+        player2.gridX = 0;
+        player2.gridY = 0;
+        player1.gridX = gridWidth - 1;
+        player1.gridY = gridHeight - 1;
 
-        player1.gridX = 0;
-        player1.gridY = 0;
-        player2.gridX = gridWidth - 1;
-        player2.gridY = gridHeight - 1;
 
         player1.transform.position = gridToWorldCoord(player1.gridX, player1.gridY);
         player2.transform.position = gridToWorldCoord(player2.gridX, player2.gridY);
@@ -183,6 +183,28 @@ public class Grid : MonoBehaviour
         {
             player1.canMove = true;
             player2.canMove = true;
+        }
+
+        if((Time.time - startTime) > gameSettings.gameDuration)
+        {
+
+            if (player1.ownedTiles > player2.ownedTiles)
+            {
+                Debug.Log("player 1 wins");
+                PlayerPrefs.SetInt("ganador", 1);
+            }
+            else if (player2.ownedTiles > player1.ownedTiles)
+            {
+                Debug.Log("player 2 wins");
+                PlayerPrefs.SetInt("ganador", 2);
+            }
+            else
+            {
+                Debug.Log("draw");
+                PlayerPrefs.SetInt("ganador", 0);
+            }
+
+            Application.LoadLevel(2);
         }
     }
 }

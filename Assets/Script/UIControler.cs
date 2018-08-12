@@ -8,6 +8,8 @@ public class UIControler : MonoBehaviour
 
     public Grid grid;
     public Sprite defaultImagen;
+    public Text Timer;
+    public Text startAgain;
     public Image[] player1PowerUps;
     public Image[] player2PowerUps;
     public Transform originPlayer1UIPoweruP;
@@ -42,15 +44,34 @@ public class UIControler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        int remainingTime = (int) (grid.gameSettings.gameDuration - (Time.time - grid.startTime));
+        Timer.text = (remainingTime / 60) + ":" + (remainingTime % 60).ToString("00");
+
         markerPlayer1.text = player1.ownedTiles.ToString();
         markerPlayer2.text = player2.ownedTiles.ToString();
-        for (int i = 0; i < player1.drillCounter; i++)
+        for (int i = 0; i < player1PowerUps.Length; i++)
         {
-            player1PowerUps[i].enabled = true;
+            if (i < player1.drillCounter)
+            {
+                player1PowerUps[i].enabled = true;
+            }
+            else
+            {
+                player1PowerUps[i].enabled = false;
+
+            }
         }
-        for (int i = 0; i < player2.drillCounter; i++)
+        for (int i = 0; i < player2PowerUps.Length; i++)
         {
-            player2PowerUps[i].enabled = true;
+            if (i < player2.drillCounter)
+            {
+                player2PowerUps[i].enabled = true;
+            }
+            else
+            {
+                player2PowerUps[i].enabled = false;
+
+            }
         }
     }
 

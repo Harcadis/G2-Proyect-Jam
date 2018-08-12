@@ -42,14 +42,14 @@ public class Player : MonoBehaviour
 
         moveCooldown = grid.gameSettings.moveCooldown;
 
-        if (playerNumber == PLAYERS.player1)
+        if (playerNumber == PLAYERS.player2)
         {
             keyUp = KeyCode.W;
             keyDown = KeyCode.S;
             keyLeft = KeyCode.A;
             keyRigth = KeyCode.D;
         }
-        if (playerNumber == PLAYERS.player2)
+        if (playerNumber == PLAYERS.player1)
         {
             keyUp = KeyCode.UpArrow;
             keyDown = KeyCode.DownArrow;
@@ -62,7 +62,7 @@ public class Player : MonoBehaviour
         leftScale = body.localScale;
         leftScale.x = -body.localScale.x;
 
-        if(playerNumber == PLAYERS.player1)
+        if(playerNumber == PLAYERS.player2)
             body.localScale = leftScale;
     }
 
