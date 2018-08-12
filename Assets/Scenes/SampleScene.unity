@@ -299,7 +299,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -20
+  m_SortingOrder: -22
   m_Sprite: {fileID: 21300000, guid: 80b7c35f087cfd6409e360b9156eefe5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -590,7 +590,6 @@ MonoBehaviour:
   gridX: 0
   gridY: 0
   grid: {fileID: 1842728320}
-  moveCooldown: 0.23
   ownedTiles: 0
   frontLayerMask: -10
   backLayerMask: -11
@@ -1003,6 +1002,26 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 224236013242282552, guid: b5f80faa622f32c41b9fca3ad42c983c,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: -419
+      objectReference: {fileID: 0}
+    - target: {fileID: 224236013242282552, guid: b5f80faa622f32c41b9fca3ad42c983c,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: -287
+      objectReference: {fileID: 0}
+    - target: {fileID: 224521478891460994, guid: b5f80faa622f32c41b9fca3ad42c983c,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 425.63
+      objectReference: {fileID: 0}
+    - target: {fileID: 224521478891460994, guid: b5f80faa622f32c41b9fca3ad42c983c,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: -287
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b5f80faa622f32c41b9fca3ad42c983c, type: 2}
   m_IsPrefabAsset: 0
@@ -1041,7 +1060,6 @@ MonoBehaviour:
   gridX: 0
   gridY: 0
   grid: {fileID: 1842728320}
-  moveCooldown: 0.23
   ownedTiles: 0
   frontLayerMask: -20
   backLayerMask: -21
@@ -1092,8 +1110,6 @@ MonoBehaviour:
   player2: {fileID: 868770085}
   superDrill: {fileID: 1056298410}
   obstacle: {fileID: 1506460604}
-  initialObstacleNumber: 7
-  initialPowerUpsNumber: 10
   gridWidth: 22
   gridHeight: 10
   tile: {fileID: 741310970}
