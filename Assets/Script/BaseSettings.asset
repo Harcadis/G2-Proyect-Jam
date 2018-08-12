@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Name: BaseSettings
   m_EditorClassIdentifier: 
   maxPowerUps: 7
-  moveCooldown: 0.2
+  moveCooldown: 0.12
   initialPowerUpsOnGrid: 0
   powerUpsSpawnRate: 0.05
   obstaclesNumber: 7
   superDrillsAtStart: 0
-  superDrillsPerPowerUp: 1
+  superDrillsPerPowerUp: 3
   unlimitedTime: 0
   gameDuration: 300000

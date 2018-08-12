@@ -33,9 +33,13 @@ public class Player : MonoBehaviour
     private Vector3 rightScale;
     private Vector3 leftScale;
 
+    public bool canMove = false;
+
     // Use this for initialization
     void Start()
     {
+        transform.localScale = new Vector3(0, 0, 0);
+
         moveCooldown = grid.gameSettings.moveCooldown;
 
         if (playerNumber == PLAYERS.player1)
@@ -57,6 +61,9 @@ public class Player : MonoBehaviour
         rightScale = body.localScale;
         leftScale = body.localScale;
         leftScale.x = -body.localScale.x;
+
+        if(playerNumber == PLAYERS.player1)
+            body.localScale = leftScale;
     }
 
     // Update is called once per frame
@@ -65,7 +72,7 @@ public class Player : MonoBehaviour
         //check key press
         //check try move
         //if tryMove retuns true, move the player
-        if (Time.time - lastMovementTime > moveCooldown)
+        if (canMove && Time.time - lastMovementTime > moveCooldown)
         {
             if (Input.GetKey(keyUp))
             {
@@ -103,7 +110,7 @@ public class Player : MonoBehaviour
             gridY = newGridY;
 
             Vector2 newCoords = grid.gridToWorldCoord(gridX, gridY);
-            iTween.MoveTo(this.gameObject, iTween.Hash("x", newCoords.x, "y", newCoords.y, "easetype", iTween.EaseType.easeInOutSine, "time", moveCooldown));
+            iTween.MoveTo(this.gameObject, iTween.Hash("x", newCoords.x, "y", newCoords.y, "easetype", iTween.EaseType.easeOutBack, "time", moveCooldown));
         }
     }
 

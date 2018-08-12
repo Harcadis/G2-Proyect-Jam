@@ -23,12 +23,25 @@ public class Tile : MonoBehaviour {
 	}
 
     public void setOwner (Player player) {
-        owner = player;
-        //spriteRenderer.color = player.color;
-        spriteRenderer.color = new Color(0,0,0,0);
 
-        mask.frontSortingOrder = player.frontLayerMask;
-        mask.backSortingOrder = player.backLayerMask;
+        if (owner != null)
+            owner.ownedTiles--;
+
+        owner = player;
+        
+        if(player != null) {
+            player.ownedTiles++;
+
+            spriteRenderer.color = new Color(0,0,0,0);
+
+            mask.frontSortingOrder = player.frontLayerMask;
+            mask.backSortingOrder = player.backLayerMask;
+        }
+        else {
+            mask.frontSortingOrder = 1;
+            mask.backSortingOrder = 0;
+            spriteRenderer.color = new Color(0, 0, 0, 0.25f);
+        }
     }
 
     public bool checkIfCanMove (Player player)

@@ -65,6 +65,7 @@
     <Compile Include="Assets\Script\Grid.cs" />
     <Compile Include="Assets\Script\GridContent.cs" />
     <Compile Include="Assets\Script\Player.cs" />
+    <Compile Include="Assets\Script\SceneLoader.cs" />
     <Compile Include="Assets\Script\Tile.cs" />
     <Compile Include="Assets\Script\UIControler.cs" />
     <Reference Include="UnityEditor.StandardEvents">

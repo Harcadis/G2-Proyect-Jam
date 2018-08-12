@@ -27,10 +27,15 @@ public class Grid : MonoBehaviour
     private float gridOriginX;
     private float gridOriginY;
 
+    private bool playerSpawned = false;
+    private bool obstaclesSpawned = false;
 
+    private float startTime;
     // Use this for initialization
     void Start()
     {
+        startTime = Time.time;
+
         gridOriginX = (gridWidth * tileWidth * 0.5f);
         gridOriginY = (gridHeight * tileWidth * 0.5f);
 
@@ -41,22 +46,18 @@ public class Grid : MonoBehaviour
         {
             for (int k = 0; k < gridHeight; k++)
             {
-                tiles[i, k] = Instantiate(tile, gridToWorldCoord(i, k), Quaternion.identity, this.transform);
+                Vector2 tilePos = gridToWorldCoord(i, k);
+                Vector2 InitialPos = tilePos + new Vector2(0, 10);
+
+                tiles[i, k] = Instantiate(tile, InitialPos, Quaternion.identity, this.transform);
+
+                iTween.MoveTo(tiles[i, k].gameObject, iTween.Hash("x", tilePos.x, "y", tilePos.y, "easetype", iTween.EaseType.easeInOutQuad, "time", 1.5f, "delay", 0.005f * Mathf.Pow((i + 1) * (k + 1), 1.1f)));
+
                 tileContent[i, k] = null;
                 //newTile.setOwner(player1);
             }
         }
-
-
-        for (int i = 0; i < gameSettings.initialPowerUpsOnGrid; i++)
-        {
-            spawnPowerUp();
-        }
-
-        for (int i = 0; i < gameSettings.obstaclesNumber; i++)
-        {
-            spawnObstacle();
-        }
+       
 
         player1.gridX = 0;
         player1.gridY = 0;
@@ -69,7 +70,7 @@ public class Grid : MonoBehaviour
 
     public Vector2 gridToWorldCoord(int gridX, int gridY)
     {
-        return new Vector2(tileWidth * gridX - gridOriginX, gridOriginY - tileHeight * gridY);
+        return new Vector2(tileWidth * (gridX + 0.5f) - gridOriginX, gridOriginY - tileHeight * (gridY - 0.5f));
     }
 
     public bool tryMove(PLAYERS player, int gridX, int gridY, int previousGridX, int previousGridY)
@@ -97,7 +98,8 @@ public class Grid : MonoBehaviour
             }
 
             tiles[previousGridX, previousGridY].setOwner(movingPlayer);
-            movingPlayer.ownedTiles++;
+            //empty the current tile
+            //tiles[gridX, gridY].setOwner(null);
 
             if (Random.Range(0f, 1f) < gameSettings.powerUpsSpawnRate)
                 spawnPowerUp();
@@ -123,6 +125,9 @@ public class Grid : MonoBehaviour
                 GridContent powerUp = Instantiate(superDrill, gridToWorldCoord(powerUpX, powerUpY), Quaternion.identity, this.transform);
                 powerUp.transform.Translate(new Vector3(0, 0, -1));
                 tileContent[powerUpX, powerUpY] = powerUp;
+
+                iTween.ScaleFrom(powerUp.gameObject, iTween.Hash("x", 0, "y", 0, "easetype", iTween.EaseType.easeOutBounce, "time", 0.5f));
+
                 spawned = true;
             }
             maximunTries--;
@@ -144,14 +149,40 @@ public class Grid : MonoBehaviour
                 GridContent obstacle = Instantiate(this.obstacle, gridToWorldCoord(obstacleX, obstacleY), Quaternion.identity, this.transform);
                 obstacle.transform.Translate(new Vector3(0, 0, -1));
                 tileContent[obstacleX, obstacleY] = obstacle;
+                iTween.ScaleFrom(obstacle.gameObject, iTween.Hash("x", 0, "y", 0, "easetype", iTween.EaseType.easeInOutQuad, "time", 0.5f));
                 spawned = true;
             }
             maximunTries--;
         }
     }
+
     // Update is called once per frame
     void Update()
     {
+        if ((Time.time - startTime) > 2.5 && !obstaclesSpawned)
+        {
+            for (int i = 0; i < gameSettings.initialPowerUpsOnGrid; i++)
+            {
+                spawnPowerUp();
+            }
 
+            for (int i = 0; i < gameSettings.obstaclesNumber; i++)
+            {
+                spawnObstacle();
+            }
+
+            obstaclesSpawned = true;
+        }
+        else if ((Time.time - startTime) > 3 && !playerSpawned)
+        {
+            iTween.ScaleTo(player1.gameObject, iTween.Hash("x", 1, "y", 1, "easetype", iTween.EaseType.easeOutQuad, "time", 1f));
+            iTween.ScaleTo(player2.gameObject, iTween.Hash("x", 1, "y", 1, "easetype", iTween.EaseType.easeOutQuad, "time", 1f));
+            playerSpawned = true;
+        }
+        if ((Time.time - startTime) > 4.5f)
+        {
+            player1.canMove = true;
+            player2.canMove = true;
+        }
     }
 }
