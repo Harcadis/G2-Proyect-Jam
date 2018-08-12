@@ -19,4 +19,4 @@ MonoBehaviour:
   superDrillsAtStart: 0
   superDrillsPerPowerUp: 3
   unlimitedTime: 0
-  gameDuration: 90
+  gameDuration: 85

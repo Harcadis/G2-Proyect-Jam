@@ -52,8 +52,13 @@ public class Tile : MonoBehaviour {
         }
         if (owner != player && player.drillCounter > 0) {
             player.drillCounter--;
+            player.MovementDrill();
             return true;
         }
+        //else
+        //{
+        //    player.MovementBlocked();
+        //}
         return false;
     }
 }

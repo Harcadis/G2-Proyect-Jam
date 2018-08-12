@@ -35,11 +35,18 @@ public class Player : MonoBehaviour
 
     public bool canMove = false;
 
+    public AudioClip stepFX;
+    public AudioClip drillFX;
+    public AudioClip blockedFX;
+    public AudioClip powerUpFX;
+
+    private AudioSource audioSource;
+
     // Use this for initialization
     void Start()
     {
         transform.localScale = new Vector3(0, 0, 0);
-
+        audioSource = this.GetComponent<AudioSource>();
         moveCooldown = grid.gameSettings.moveCooldown;
 
         if (playerNumber == PLAYERS.player2)
@@ -111,11 +118,26 @@ public class Player : MonoBehaviour
 
             Vector2 newCoords = grid.gridToWorldCoord(gridX, gridY);
             iTween.MoveTo(this.gameObject, iTween.Hash("x", newCoords.x, "y", newCoords.y, "easetype", iTween.EaseType.easeOutBack, "time", moveCooldown));
+
+            audioSource.PlayOneShot(stepFX);
         }
     }
 
+    public void MovementBlocked()
+    {
+        audioSource.PlayOneShot(blockedFX);
+    }
+
+    public void MovementDrill()
+    {
+        audioSource.PlayOneShot(drillFX);
+    }
+
+
     public void getPowerup()
     {
+        audioSource.PlayOneShot(powerUpFX);
+
         drillCounter += grid.gameSettings.superDrillsPerPowerUp;
         if (drillCounter > grid.gameSettings.maxPowerUps)
         {
